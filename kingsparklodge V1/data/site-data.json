@@ -1,0 +1,84 @@
+{
+  "business": {
+    "name": "Kings Park Lodge",
+    "tagline": "Comfortable. Affordable. Convenient.",
+    "phoneDisplay": "031 303 2887",
+    "phoneHref": "+27313032887",
+    "email": "info@kingsparklodge.co.za",
+    "address": {
+      "line1": "38 Adrian Road",
+      "suburb": "Morningside",
+      "city": "Durban",
+      "country": "South Africa",
+      "full": "38 Adrian Road, Morningside, Durban, South Africa"
+    },
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38+Adrian+Road+Morningside+Durban+South+Africa",
+    "mapsEmbedUrl": "https://maps.google.com/maps?q=38%20Adrian%20Road%2C%20Morningside%2C%20Durban%2C%20South%20Africa&t=&z=15&ie=UTF8&iwloc=&output=embed"
+  },
+  "rates": {
+    "currency": "R",
+    "overnight": {
+      "label": "Overnight Stay",
+      "price": 650,
+      "checkIn": "4:00 PM",
+      "checkOut": "10:00 AM",
+      "note": "Our standard overnight rate, per room."
+    },
+    "day": {
+      "label": "Day Stay",
+      "price": 550,
+      "checkIn": "10:00 AM",
+      "checkOut": "3:30 PM",
+      "note": "A day-use rate for guests who don't need an overnight stay."
+    },
+    "earlyCheckIn": {
+      "label": "Early Check-In",
+      "price": 150,
+      "availableFrom": "11:00 AM",
+      "note": "Add this to your stay if you'd like to check in ahead of the standard time."
+    },
+    "specialsNote": "We have special offers available from time to time. Call us on 031 303 2887 to ask about our current specials.",
+    "shortStayNote": "Short-stay options may be available. Please contact us directly.",
+    "lastUpdatedNote": "Rates are correct at the time of publishing and may change without notice. Please confirm current rates when you enquire."
+  },
+  "rooms": [
+    {
+      "id": "standard-double",
+      "name": "Standard Double Room",
+      "description": "A comfortable, well-appointed double room — a practical choice for couples or solo travellers who want a clean, quiet base in Morningside.",
+      "features": ["Double bed", "Air conditioning", "Free Wi-Fi", "Television", "Private bathroom"],
+      "priceFrom": 650,
+      "priceUnit": "per night",
+      "imageTone": "maroon",
+      "imageAlt": "Standard Double Room at Kings Park Lodge, Morningside, Durban"
+    },
+    {
+      "id": "standard-twin",
+      "name": "Standard Twin Room",
+      "description": "Two single beds in a tidy, comfortable room — suited to friends or colleagues travelling together on business or for events.",
+      "features": ["Twin beds", "Air conditioning", "Free Wi-Fi", "Television", "Private bathroom"],
+      "priceFrom": 650,
+      "priceUnit": "per night",
+      "imageTone": "cream",
+      "imageAlt": "Standard Twin Room at Kings Park Lodge, Morningside, Durban"
+    },
+    {
+      "id": "family-room",
+      "name": "Family Room",
+      "description": "Extra space for small families or small groups, with the same essential comforts across every room at the lodge.",
+      "features": ["Additional sleeping space", "Air conditioning", "Free Wi-Fi", "Television", "Private bathroom"],
+      "priceFrom": 650,
+      "priceUnit": "per night",
+      "imageTone": "charcoal",
+      "imageAlt": "Family Room at Kings Park Lodge, Morningside, Durban"
+    }
+  ],
+  "facilities": [
+    { "name": "Free Wi-Fi", "description": "Stay connected throughout your visit.", "icon": "wifi" },
+    { "name": "Air Conditioning", "description": "Comfortable rooms with air conditioning.", "icon": "ac" },
+    { "name": "Television", "description": "Enjoy television entertainment in your room.", "icon": "tv" },
+    { "name": "Free Parking", "description": "Convenient parking available for guests.", "icon": "parking" },
+    { "name": "Shared Kitchen", "description": "A practical shared kitchen for guests.", "icon": "kitchen" },
+    { "name": "Shared Eating Area", "description": "A communal space to enjoy your meals.", "icon": "dining" }
+  ]
+}

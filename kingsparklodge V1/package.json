@@ -1,0 +1,12 @@
+{
+  "name": "kings-park-lodge-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Kings Park Lodge marketing website with a Netlify Function + Resend enquiry form.",
+  "scripts": {
+    "dev": "netlify dev"
+  },
+  "dependencies": {
+    "resend": "^4.0.0"
+  }
+}
