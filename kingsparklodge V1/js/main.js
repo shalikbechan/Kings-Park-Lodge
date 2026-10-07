@@ -183,6 +183,13 @@
         return;
       }
 
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
+        statusBox.textContent = "Please enter a valid email address (for example name@gmail.com).";
+        statusBox.classList.add("show", "error");
+        form.email.focus();
+        return;
+      }
+
       submitBtn.disabled = true;
       submitBtn.textContent = "Sending…";
 
@@ -192,8 +199,14 @@
         body: JSON.stringify(payload)
       })
         .then(function (res) {
-          if (!res.ok) throw new Error("Request failed");
-          return res.json().catch(function () { return {}; });
+          return res.json().catch(function () { return {}; }).then(function (body) {
+            if (!res.ok) {
+              var err = new Error((body && body.error) || "Request failed");
+              err.status = res.status;
+              throw err;
+            }
+            return body;
+          });
         })
         .then(function () {
           form.reset();
@@ -201,7 +214,14 @@
           statusBox.textContent = "Thank you. Your enquiry has been received. Kings Park Lodge will contact you shortly.";
           statusBox.classList.add("show", "success");
         })
-        .catch(function () {
+        .catch(function (err) {
+          if (err && err.status === 400) {
+            statusBox.textContent = err.message === "Invalid email address"
+              ? "Please enter a valid email address (for example name@gmail.com)."
+              : "Please check your details and fill in all required fields.";
+            statusBox.classList.add("show", "error");
+            return;
+          }
           statusBox.innerHTML =
             "Sorry, something went wrong sending your enquiry. Please call us on " +
             "<a href='tel:+27313032887'>031 303 2887</a> or email " +
