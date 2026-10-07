@@ -471,6 +471,11 @@ section { padding: 64px 0; }
 }
 .ph-photo.tone-cream .ph-tag { background: rgba(34,21,18,0.14); color: var(--ink-700); }
 .hero-media.ph-photo { aspect-ratio: auto; }
+.ph-photo.landscape { aspect-ratio: 4 / 3; }
+.photo-card { margin: 0; }
+.photo-card .ph-photo { border-radius: var(--radius-sm); }
+.photo-card .ph-photo::before { display: none; }
+.photo-card figcaption { margin-top: 10px; font-size: 0.9rem; color: var(--ink-700); }
 
 /* ---------- Room card ---------- */
 .room-card { display: flex; flex-direction: column; }

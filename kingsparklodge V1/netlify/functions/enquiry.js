@@ -5,8 +5,9 @@
 //
 // Required env vars:
 //   RESEND_API_KEY   - your Resend API key
-//   ENQUIRY_TO       - inbox that receives enquiries, e.g. info@kingsparklodge.co.za
-//   ENQUIRY_FROM     - a "From" address on a domain verified in Resend,
+//   ENQUIRY_TO       - inbox that receives enquiries (defaults to kingsparklodge@gmail.com)
+//   ENQUIRY_FROM     - optional. Leave unset to send from Resend's shared address
+//                      (onboarding@resend.dev), or use an address on a domain verified in Resend,
 //                      e.g. "Kings Park Lodge Website <enquiries@kingsparklodge.co.za>"
 // Optional:
 //   ALLOWED_ORIGIN   - restrict CORS to your live domain, e.g. https://kingsparklodge.co.za
@@ -99,7 +100,7 @@ exports.handler = async function (event) {
   }
 
   const resend = new Resend(process.env.RESEND_API_KEY);
-  const toAddress = process.env.ENQUIRY_TO || "info@kingsparklodge.co.za";
+  const toAddress = process.env.ENQUIRY_TO || "kingsparklodge@gmail.com";
   const fromAddress = process.env.ENQUIRY_FROM || "Kings Park Lodge Website <onboarding@resend.dev>";
 
   const fullName = [firstName, lastName].filter(Boolean).join(" ");

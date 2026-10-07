@@ -205,7 +205,7 @@
           statusBox.innerHTML =
             "Sorry, something went wrong sending your enquiry. Please call us on " +
             "<a href='tel:+27313032887'>031 303 2887</a> or email " +
-            "<a href='mailto:info@kingsparklodge.co.za'>info@kingsparklodge.co.za</a>.";
+            "<a href='mailto:kingsparklodge@gmail.com'>Kingsparklodge@gmail.com</a>.";
           statusBox.classList.add("show", "error");
         })
         .finally(function () {

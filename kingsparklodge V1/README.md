@@ -24,13 +24,13 @@ package.json                                          -> declares the "resend" d
 
 ## 2. Connect Resend (for the enquiry form)
 
-1. Create a free account at resend.com if you don't have one.
-2. Verify your sending domain in Resend (Domains -> Add Domain) and add the DNS records it gives you — this lets you send from an address like `enquiries@kingsparklodge.co.za` instead of a shared Resend testing address.
+1. Create a free account at resend.com **signed up with kingsparklodge@gmail.com**. Without a verified domain, Resend's shared sender (`onboarding@resend.dev`) can only deliver to the email address that owns the Resend account — so the account must be the Gmail inbox that receives enquiries.
+2. (Optional) Verify a sending domain in Resend (Domains -> Add Domain) if you later want to send from your own domain address.
 3. Create an API key in Resend (Dashboard -> API Keys).
 4. In Netlify: **Site settings -> Environment variables**, add:
    - `RESEND_API_KEY` — the key from step 3
-   - `ENQUIRY_TO` — the inbox that should receive enquiries, e.g. `info@kingsparklodge.co.za`
-   - `ENQUIRY_FROM` — a verified sending address, e.g. `Kings Park Lodge Website <enquiries@kingsparklodge.co.za>`
+   - `ENQUIRY_TO` — the inbox that should receive enquiries, `kingsparklodge@gmail.com`
+   - `ENQUIRY_FROM` — optional; leave it unset to use `onboarding@resend.dev`. Only set it to an address on a domain you've verified in Resend.
    - `ALLOWED_ORIGIN` — your live domain, e.g. `https://www.kingsparklodge.co.za` (locks down who can call the function)
 5. Redeploy. The contact form on `/contact.html` posts to `/.netlify/functions/enquiry`, which emails whoever `ENQUIRY_TO` is set to, with **Reply-To** set to the guest's own email so you can just hit reply.
 
