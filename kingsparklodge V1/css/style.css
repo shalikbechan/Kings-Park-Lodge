@@ -235,11 +235,21 @@ section { padding: 64px 0; }
   z-index: 200;
   display: flex;
   flex-direction: column;
-  padding: 24px var(--gutter) 32px;
+  padding: 24px var(--gutter) calc(32px + env(safe-area-inset-bottom, 0px));
+  /* Scroll inside the menu when the phone screen is shorter than the menu */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  /* Fully hidden when closed, so nothing can peek out on short screens */
+  visibility: hidden;
   transform: translateY(-100%);
-  transition: transform 0.28s ease;
+  transition: transform 0.28s ease, visibility 0s linear 0.28s;
 }
-.mobile-nav.open { transform: translateY(0); }
+.mobile-nav.open {
+  visibility: visible;
+  transform: translateY(0);
+  transition: transform 0.28s ease, visibility 0s linear 0s;
+}
 .mobile-nav-top {
   display: flex;
   align-items: center;
@@ -258,7 +268,7 @@ section { padding: 64px 0; }
   cursor: pointer;
 }
 .mobile-nav ul { display: flex; flex-direction: column; gap: 4px; }
-.mobile-nav a {
+.mobile-nav ul a {
   display: block;
   padding: 14px 4px;
   font-family: var(--font-display);
@@ -266,7 +276,7 @@ section { padding: 64px 0; }
   color: var(--cream-100);
   border-bottom: 1px solid rgba(255,255,255,0.12);
 }
-.mobile-nav a.active { color: var(--cream-400); }
+.mobile-nav ul a.active { color: var(--cream-400); }
 .mobile-nav-ctas {
   margin-top: auto;
   display: flex;
@@ -801,4 +811,27 @@ section { padding: 64px 0; }
   .hero-ctas .btn { flex: 1 1 100%; }
   .hero-price { margin-top: 2px; }
   .specials-panel { padding: 28px 20px; }
+}
+
+/* ---------- Small phones (iPhone 13 / SE and similar) ---------- */
+@media (max-width: 400px) {
+  :root { --gutter: 16px; }
+  .brand { font-size: 1.12rem; }
+  .hero h1 { font-size: 2.2rem; }
+  .hero .subhead { font-size: 1rem; }
+  .btn { padding: 13px 20px; font-size: 0.86rem; }
+  .mobile-action-bar a { font-size: 0.64rem; }
+}
+@media (max-height: 760px) {
+  .mobile-nav { padding-top: 16px; }
+  .mobile-nav-top { margin-bottom: 16px; }
+  .mobile-nav ul a { padding: 10px 4px; font-size: 1.3rem; }
+  .mobile-nav-ctas { padding-top: 18px; gap: 10px; }
+  .mobile-nav-meta { margin-top: 14px; }
+}
+.mobile-nav-top .brand {
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  font-size: 1.3rem;
 }
