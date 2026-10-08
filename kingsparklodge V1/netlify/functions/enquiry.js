@@ -37,6 +37,40 @@ function escapeHtml(str) {
     .replace(/"/g, "&quot;");
 }
 
+// ---------- Guest confirmation email ----------
+const LODGE_PHONE = "031 303 2887";
+const LODGE_ADDRESS = "38 Adrian Road, Morningside, Durban";
+
+function guestHtml(firstName, phone, message) {
+  return (
+    "<div style=\"font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;color:#2b1d1a;\">" +
+    "<div style=\"background:#731b19;padding:22px 26px;\">" +
+    "<h1 style=\"margin:0;font-family:Georgia,serif;font-size:22px;color:#ffffff;\">Kings Park Lodge</h1>" +
+    "</div>" +
+    "<div style=\"padding:26px;background:#faf6f0;\">" +
+    "<p style=\"font-size:16px;margin:0 0 14px;\">Hi " + escapeHtml(firstName) + ",</p>" +
+    "<p style=\"font-size:15px;line-height:1.55;margin:0 0 14px;\">Thank you for your enquiry. It has been sent to the Kings Park Lodge management team, and we'll get back to you as soon as possible.</p>" +
+    "<p style=\"font-size:15px;line-height:1.55;margin:0 0 8px;\"><strong>Your message:</strong></p>" +
+    "<p style=\"font-size:15px;line-height:1.55;margin:0 0 18px;padding:12px 14px;background:#ffffff;border-left:3px solid #731b19;white-space:pre-wrap;\">" + escapeHtml(message) + "</p>" +
+    "<p style=\"font-size:15px;line-height:1.55;margin:0 0 18px;\">We'll contact you on <strong>" + escapeHtml(phone) + "</strong> or by email. If your enquiry is urgent, please call us on <a href=\"tel:+27313032887\" style=\"color:#731b19;\">" + LODGE_PHONE + "</a>.</p>" +
+    "<p style=\"font-size:15px;margin:0;\">Kind regards,<br>Kings Park Lodge</p>" +
+    "</div>" +
+    "<p style=\"font-size:12px;color:#8a7a74;padding:14px 26px;margin:0;\">" + LODGE_ADDRESS + " &middot; " + LODGE_PHONE + "<br>You're receiving this because you sent an enquiry on kingsparklodge.co.za. Reply to this email to reach us.</p>" +
+    "</div>"
+  );
+}
+
+function guestText(firstName, phone, message) {
+  return (
+    "Hi " + firstName + ",\n\n" +
+    "Thank you for your enquiry. It has been sent to the Kings Park Lodge management team, and we'll get back to you as soon as possible.\n\n" +
+    "Your message:\n" + message + "\n\n" +
+    "We'll contact you on " + phone + " or by email. If your enquiry is urgent, please call us on " + LODGE_PHONE + ".\n\n" +
+    "Kind regards,\nKings Park Lodge\n" + LODGE_ADDRESS + "\n\n" +
+    "You're receiving this because you sent an enquiry on kingsparklodge.co.za. Reply to this email to reach us."
+  );
+}
+
 exports.handler = async function (event) {
   if (event.httpMethod === "OPTIONS") {
     return { statusCode: 204, headers: corsHeaders(), body: "" };
@@ -142,10 +176,31 @@ exports.handler = async function (event) {
       };
     }
 
+    // Confirmation email to the guest. If this one fails, the enquiry has
+    // still reached the lodge, so we report success and just log the problem.
+    let confirmationSent = false;
+    try {
+      const guestResult = await resend.emails.send({
+        from: fromAddress,
+        to: email,
+        reply_to: toAddress,
+        subject: "We've received your enquiry - Kings Park Lodge",
+        html: guestHtml(firstName, phone, message),
+        text: guestText(firstName, phone, message)
+      });
+      if (guestResult.error) {
+        console.error("Guest confirmation error:", guestResult.error);
+      } else {
+        confirmationSent = true;
+      }
+    } catch (guestErr) {
+      console.error("Guest confirmation error:", guestErr);
+    }
+
     return {
       statusCode: 200,
       headers: corsHeaders(),
-      body: JSON.stringify({ ok: true, id: result.data && result.data.id })
+      body: JSON.stringify({ ok: true, id: result.data && result.data.id, confirmationSent: confirmationSent })
     };
   } catch (err) {
     console.error("Enquiry function error:", err);

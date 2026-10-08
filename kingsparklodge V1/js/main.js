@@ -208,11 +208,28 @@
             return body;
           });
         })
-        .then(function () {
+        .then(function (body) {
+          var name = payload.firstName;
+          var email = payload.email;
           form.reset();
+          // The status box lives inside the form; move it out before hiding the form
+          form.parentNode.insertBefore(statusBox, form.nextSibling);
           form.hidden = true;
-          statusBox.textContent = "Thank you. Your enquiry has been received. Kings Park Lodge will contact you shortly.";
+          statusBox.textContent = "";
+          var title = document.createElement("strong");
+          title.textContent = "Thank you, " + name + " — your enquiry has been sent.";
+          var line1 = document.createElement("span");
+          line1.textContent = "Your message has been delivered to the Kings Park Lodge management team, and we'll get back to you as soon as possible.";
+          statusBox.appendChild(title);
+          statusBox.appendChild(document.createElement("br"));
+          statusBox.appendChild(line1);
+          if (body && body.confirmationSent) {
+            var line2 = document.createElement("span");
+            line2.textContent = " We've also emailed a confirmation to " + email + " (check your spam folder if you don't see it).";
+            statusBox.appendChild(line2);
+          }
           statusBox.classList.add("show", "success");
+          statusBox.scrollIntoView({ behavior: "smooth", block: "center" });
         })
         .catch(function (err) {
           if (err && err.status === 400) {
